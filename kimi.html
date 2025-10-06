@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corban Photography | Capturing Moments That Last a Lifetime</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-white: #ffffff;
+            --warm-gray: #f5f5f5;
+            --medium-gray: #888888;
+            --dark-gray: #333333;
+            --black: #000000;
+            --accent: #c0a062;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--dark-gray);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 300;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: var(--dark-gray);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--dark-gray);
+            font-weight: 300;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .nav-menu a:hover {
+            color: var(--accent);
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 2px;
+            background: var(--dark-gray);
+            margin: 3px 0;
+            transition: 0.3s;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('pic/19261.jpg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: var(--primary-white);
+            position: relative;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.3s both;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: transparent;
+            color: var(--primary-white);
+            text-decoration: none;
+            border: 1px solid var(--primary-white);
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .btn:hover {
+            background: var(--primary-white);
+            color: var(--dark-gray);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+        }
+
+        /* About Section */
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            line-height: 1.8;
+        }
+
+        .about-image {
+            text-align: center;
+        }
+
+        .about-image img {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Services Section */
+        .services {
+            background: var(--warm-gray);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: var(--primary-white);
+            padding: 2rem;
+            text-align: center;
+            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .service-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        /* Portfolio Section */
+        .portfolio-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+        }
+
+        .portfolio-item {
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            aspect-ratio: 1;
+        }
+
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .portfolio-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-overlay p {
+            color: var(--primary-white);
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: var(--warm-gray);
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: var(--primary-white);
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            position: relative;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card li {
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .note {
+            text-align: center;
+            margin-top: 2rem;
+            font-style: italic;
+            color: var(--medium-gray);
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .contact-info {
+            padding-left: 2rem;
+        }
+
+        .contact-info h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .contact-info p {
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            background: var(--dark-gray);
+            color: var(--primary-white);
+            text-align: center;
+            line-height: 40px;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-gray);
+            color: var(--primary-white);
+            text-align: center;
+            padding: 2rem;
+            font-weight: 300;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 20px;
+            right: 40px;
+            color: var(--primary-white);
+            font-size: 3rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--primary-white);
+                flex-direction: column;
+                padding: 2rem;
+                box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-image {
+                order: -1;
+            }
+
+            .contact-info {
+                padding-left: 0;
+                text-align: center;
+            }
+
+            .portfolio-gallery {
+                grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="logo">CORBAN PHOTOGRAPHY</div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#portfolio">Portfolio</a></li>
+                <li><a href="#pricing">Pricing</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>CORBAN PHOTOGRAPHY</h1>
+            <p>Capturing Moments That Last a Lifetime</p>
+            <a href="#portfolio" class="btn">View Portfolio</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title fade-in">About Me</h2>
+        <div class="about-container">
+            <div class="about-text fade-in">
+                <p>Welcome to Corban Photography, where every image tells a story. With over 8 years of experience capturing life's most precious moments, I specialize in creating timeless photographs that you'll treasure forever.</p>
+                <p>My approach combines natural light photography with a candid, documentary style to create authentic, emotional images. Whether it's the joy of your wedding day, the love in a family portrait, or the energy of a corporate event, I'm passionate about preserving your memories with artistic vision and technical excellence.</p>
+            </div>
+            <div class="about-image fade-in">
+                <img src="pic/WhatsApp Image 2025-10-06 at 10.19.43 AM.jpeg" alt="Photographer">
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <h2 class="section-title fade-in">Services</h2>
+        <div class="services-grid">
+            <div class="service-card fade-in">
+                <div class="service-icon">💍</div>
+                <h3>Weddings</h3>
+                <p>Comprehensive wedding photography capturing every magical moment from preparation to celebration.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">👨‍👩‍👧‍👦</div>
+                <h3>Family Sessions</h3>
+                <p>Heartwarming family portraits that showcase the unique bond and love shared between family members.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🎭</div>
+                <h3>Events</h3>
+                <p>Professional event photography for corporate functions, parties, and special celebrations.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">🏢</div>
+                <h3>Commercial</h3>
+                <p>High-quality commercial photography for businesses, products, and professional branding.</p>
+            </div>
+            <div class="service-card fade-in">
+                <div class="service-icon">📸</div>
+                <h3>Portraits</h3>
+                <p>Individual and couple portrait sessions showcasing personality and style in stunning imagery.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio">
+        <h2 class="section-title fade-in">Portfolio</h2>
+        <div class="portfolio-gallery">
+            <div class="portfolio-item fade-in" onclick="openLightbox(this)">
+                <img src="pic/32845.jpg" alt="Wedding Photography">
+                <div class="portfolio-overlay">
+                    <p>Wedding Photography</p>
+                </div>
+            </div>
+            <div class="portfolio-item fade-in" onclick="openLightbox(this)">
+                <img src="pic/32796.jpg" alt="Portrait Photography">
+                <div class="portfolio-overlay">
+                    <p>Portrait Photography</p>
+                </div>
+            </div>
+            <div class="portfolio-item fade-in" onclick="openLightbox(this)">
+                <img src="pic/32594.jpg" alt="Landscape Photography">
+                <div class="portfolio-overlay">
+                    <p>Landscape Photography</p>
+                </div>
+            </div>
+            <div class="portfolio-item fade-in" onclick="openLightbox(this)">
+                <img src="pic/32595.jpg" alt="Event Photography">
+                <div class="portfolio-overlay">
+                    <p>Event Photography</p>
+                </div>
+            </div>
+            <div class="portfolio-item fade-in" onclick="openLightbox(this)">
+                <img src="pic/32797.jpg" alt="Family Photography">
+                <div class="portfolio-overlay">
+                    <p>Family Photography</p>
+                </div>
+            </div>
+            <div class="portfolio-item fade-in" onclick="openLightbox(this)">
+                <img src="pic/monopoly.jpeg" alt="Commercial Photography">
+                <div class="portfolio-overlay">
+                    <p>Commercial Photography</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <h2 class="section-title fade-in">Investment</h2>
+        <div class="pricing-grid">
+            <div class="pricing-card fade-in">
+                <h3>Portrait Session</h3>
+                <div class="price">ksh 3000</div>
+                <ul>
+                    <li>3 hour session</li>
+                    <li>25 edited digital images</li>
+                    <li>Online gallery</li>
+                    <li>Print release</li>
+                </ul>
+                <a href="#contact" class="btn">Book Now</a>
+            </div>
+            <div class="pricing-card fade-in">
+                <h3>Wedding Package</h3>
+                <div class="price">ksh 50000</div>
+                <ul>
+                    <li>8 hours coverage</li>
+                    <li>300+ edited images</li>
+                    <li>Online gallery</li>
+                    <li>USB with high-res images</li>
+                </ul>
+                <a href="#contact" class="btn">Book Now</a>
+            </div>
+            <div class="pricing-card fade-in">
+                <h3>Event Photography</h3>
+                <div class="price">ksh2000/hr</div>
+                <ul>
+                    <li>Minimum 2 hours</li>
+                    <li>Professional editing</li>
+                    <li>Online gallery</li>
+                    <li>Quick turnaround</li>
+                </ul>
+                <a href="#contact" class="btn">Book Now</a>
+            </div>
+        </div>
+        <p class="note">Custom packages available upon request</p>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title fade-in">Let's Create Something Beautiful Together</h2>
+        <div class="contact-container">
+            <form class="contact-form fade-in">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="event">Event Type</label>
+                    <select id="event" name="event" required>
+                        <option value="">Select an option</option>
+                        <option value="wedding">Wedding</option>
+                        <option value="portrait">Portrait</option>
+                        <option value="event">Event</option>
+                        <option value="family">Family Session</option>
+                        <option value="commercial">Commercial</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn">Send Message</button>
+            </form>
+            <div class="contact-info fade-in">
+                <h3>Get in Touch</h3>
+                <p><strong>Email:</strong> hello@corbanphotography.com</p>
+                <p><strong>Phone:</strong> (555) 123-4567</p>
+                <p><strong>Location:</strong> Available for travel worldwide</p>
+                <p><strong>Response Time:</strong> Within 24 hours</p>
+                
+                <div class="social-links">
+                    <a href="#" aria-label="Instagram">📷</a>
+                    <a href="#" aria-label="Facebook">📘</a>
+                    <a href="#" aria-label="Twitter">🐦</a>
+                    <a href="#" aria-label="LinkedIn">💼</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; Corban Photography 2025. All rights reserved.</p>
+    </footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <img id="lightbox-img" src="" alt="Lightbox Image">
+    </div>
+
+    <script>
+        // Mobile menu toggle
+         hamburger = document.querySelector('.hamburger');
+         navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                    navMenu.classList.remove('active');
+                }
+            });
+        });
+
+        // Fade in animation on scroll
+         observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+         observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Lightbox functionality
+        function openLightbox(element) {
+            const img = element.querySelector('img');
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            
+            lightboxImg.src = img.src;
+            lightbox.style.display = 'flex';
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
+        // Close lightbox on escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                closeLightbox();
+            }
+        });
+
+        // Form submission
+        document.querySelector('.contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Thank you for your message! I\'ll get back to you within 24 hours.');
+            e.target.reset();
+        });
+        </script>
+             
+</body>
+</html>
