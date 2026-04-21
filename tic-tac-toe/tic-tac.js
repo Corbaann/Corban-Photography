@@ -1,63 +1,108 @@
+// ...existing code...
+const gameBoard = (() => {
+  let board = [
+    [null, null, null],
+    [null, null, null],
+    [null, null, null],
+  ];
 
-const gameBoard={
- board : [9].fill(null),
- currentPlayer: "x",
- winGame : false
-};
+  const players = ["x", "o"];
+  let currentPlayer = "x";
+  let gameActive = true;
+  const winPatterns = [
+    [[0, 0], [0, 1], [0, 2]],
+    [[1, 0], [1, 1], [1, 2]],
+    [[2, 0], [2, 1], [2, 2]],
 
-const  currentPlayer={
-  x,
-   y
-   
-};
+    [[0, 0], [1, 0], [2, 0]],
+    [[0, 1], [1, 1], [2, 1]],
+    [[0, 2], [1, 2], [2, 2]],
 
-const winGame=[
-     [0, 1, 2], [3, 4, 5], [6, 7, 8], // Horizontal
-  [0, 3, 6], [1, 4, 7], [2, 5, 8], // Vertical
-  [0, 4, 8], [2, 4, 6]    
-];
-function checkWinner() {
-  for (let combination of  winGame) {
-    const [a, b, c] = combination;
-    
-    // Check if the first slot is filled and matches the next two
-    if (gameBoard.board[a] && 
-        gameBoard.board[a] === gameBoard.board[b] && 
-        gameBoard.board[a] === gameBoard.board[c]) {
-      return gameBoard.board[a]; // Returns 'X' or 'Y'
+    [[0, 0], [1, 1], [2, 2]],
+    [[0, 2], [1, 1], [2, 0]],
+  ];
+
+  let winner = null;
+  let onWin = null;
+  let onDraw = null;
+
+  const isBoardFull = () =>
+     board.every(row => row.every(cell => cell !== null));
+
+  const checkWinner = (marker) =>
+    winPatterns.some(pattern => pattern.every(([r, c]) => board[r][c] === marker));
+
+  const resetBoard = () => {
+    board = [
+      [null, null, null],
+      [null, null, null],
+      [null, null, null],
+    ];
+    gameActive = true;
+    winner = null;
+    currentPlayer = "x";
+  };
+
+  const handleMove = (row, col) => {
+    if (!gameActive) return false;
+    if (typeof row !== "number" || typeof col !== "number") return false;
+    if (row < 0 || row > 2 || col < 0 || col > 2) return false;
+    if (!isEmpty(row, col)) return false;
+
+    board[row][col] = currentPlayer;
+
+    if (checkWinner(currentPlayer)) {
+      winner = currentPlayer;
+      gameActive = false;
+      if (typeof onWin === "function") onWin(winner);
+      return true;
     }
-  }
-   if (!gameBoard.board.includes(null)) {
-    return 'Draw';
-  }
 
-  return null;
-}
-function resetGame() {
-  console.log("Resetting board...");
-  gameBoard.board = Array(9).fill(null);
-  gameBoard.currentPlayer = 'x';
-  gameBoard.isGameOver = false;
-}
+    if (isBoardFull()) {
+      gameActive = false;
+      if (typeof onDraw === "function") onDraw();
+      return true;
+    }
 
-function playGame(position){
- currentPlayer.player1=x
- currentPlayer.player2=y
-if (gameBoard.board[position]!==undefined || gameBoard.winGame === false)
-    return gameBoard.board[position]=gameBoard.currentPlayer;
-    const winner= checkWinner();
+    currentPlayer = currentPlayer === "x" ? "o" : "x";
+    return true;
+  };
 
-if (gameBoard.winGame=true ){
-    console.log(`${winner} has won`) 
+  const getState = () => ({
+    board: board.map(row => [...row]),
+    currentPlayer,
+    gameActive,
+    winner,
+    isDraw: !gameActive && winner === null && isBoardFull(),
+  });
+
+  const getCurrentPlayer = () => currentPlayer;
+
+  const isEmpty = (row, col) => board[row]?.[col] === null;
+
+  const getWinningPatterns = () => winPatterns;
+
+  const setOnWin = (cb) => { onWin = typeof cb === 'function' ? cb : null; };
+  const setOnDraw = (cb) => { onDraw = typeof cb === 'function' ? cb : null; };
+
+  return {
+    handleMove,
+    resetBoard,
+    getState,
+    getCurrentPlayer,
+    isEmpty,
+    getWinningPatterns,
+    setOnWin,
+    setOnDraw,
+  };
+})();
+gameBoard.onWin = (winner) => console.log(`🎉 Player ${winner} wins!`);
+gameBoard.onDraw = (nextStarter) => console.log(`🤝 Draw! Next game starts with ${nextStarter}`);
+gameBoard.onMoveSuccess = (row, col, player, isWin) => {
+  console.log(`Move: ${player} at (${row},${col})`);
+  if (!isWin && !gameBoard.getState().isDraw) console.log(`Next player: ${gameBoard.getCurrentPlayer()}`);
+};
+gameBoard.onError = (err) => console.error(err);
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = gameBoard;
 }
-if (winner === "Draw"){
-   console.log("Game is a draw ")
-}
-if(gameBoard.board[position]!== undefined ){
-    console.log("position taken")
-}
-   else {
-    gameBoard.currentPlayer = (gameBoard.currentPlayer === 'x') ? 'y' : 'x';
-  }
-}
-playGame()
